@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Unblock Account with Fine</title>
+
+<!-- Google Fonts & Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+
+<style>
+  /* Reset & Base */
+  body {
+    margin: 0; padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffefba, #ffffff);
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh;
+    color: #3e2723;
+  }
+  .container {
+    background: #fff;
+    max-width: 460px;
+    width: 100%;
+    border-radius: 20px;
+    padding: 30px 30px 40px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    text-align: center;
+    position: relative;
+  }
+
+  /* Header */
+  h1 {
+    font-weight: 700;
+    font-size: 26px;
+    color: #bf360c;
+    margin-bottom: 15px;
+    display: flex; justify-content: center; align-items: center; gap: 12px;
+  }
+  h1 .material-icons-outlined {
+    font-size: 36px;
+    color: #e64a19;
+  }
+
+  /* Message */
+  p.message {
+    font-size: 17px;
+    line-height: 1.5;
+    margin-bottom: 28px;
+    color: #5d4037;
+    min-height: 110px;
+  }
+
+  /* Language toggle */
+  .lang-switch {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 600;
+    color: #6d4c41;
+    user-select: none;
+  }
+  .lang-switch input[type="checkbox"] {
+    width: 40px;
+    height: 20px;
+    appearance: none;
+    background: #ccc;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+  }
+  .lang-switch input[type="checkbox"]:checked {
+    background: #e64a19;
+  }
+  .lang-switch input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 14px; height: 14px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
+  .lang-switch input[type="checkbox"]:checked::before {
+    transform: translateX(20px);
+  }
+  .lang-switch label {
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* Checkbox */
+  .checkbox-container {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    color: #5d4037;
+    user-select: none;
+    font-size: 16px;
+  }
+  input[type="checkbox"] {
+    width: 20px; height: 20px;
+    cursor: pointer;
+    accent-color: #e64a19;
+  }
+  label[for="agreeCheckbox"] {
+    cursor: pointer;
+  }
+
+  /* Payment Buttons */
+  .payment-options {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .payment-btn {
+    padding: 14px 0;
+    font-weight: 700;
+    border-radius: 40px;
+    cursor: pointer;
+    border: none;
+    font-size: 18px;
+    color: white;
+    box-shadow: 0 6px 18px rgba(230,74,25,0.3);
+    transition: background-color 0.3s ease;
+  }
+  .bkash {
+    background-color: #e34234;
+  }
+  .bkash:hover {
+    background-color: #b32b21;
+  }
+  .nagad {
+    background-color: #fcbf49;
+    color: #5d4037;
+    box-shadow: 0 6px 18px rgba(252,191,73,0.4);
+  }
+  .nagad:hover {
+    background-color: #cda53e;
+  }
+  .rocket {
+    background-color: #4caf50;
+    box-shadow: 0 6px 18px rgba(76,175,80,0.4);
+  }
+  .rocket:hover {
+    background-color: #357a38;
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 25px 20px 35px;
+    }
+    h1 {
+      font-size: 22px;
+    }
+    p.message {
+      font-size: 15px;
+      min-height: auto;
+    }
+    .payment-btn {
+      font-size: 16px;
+      padding: 12px 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container" role="main" aria-labelledby="mainTitle">
+  <div class="lang-switch">
+    <label for="langToggle" id="langLabel">বাংলা</label>
+    <input type="checkbox" id="langToggle" aria-checked="false" aria-label="Language toggle"/>
+    <label for="langToggle" id="langLabelEng" style="display:none;">English</label>
+  </div>
+
+  <h1 id="mainTitle" tabindex="0">
+    <span class="material-icons-outlined" aria-hidden="true">lock_open</span>
+    <span id="titleText">Unblock account with fine</span>
+  </h1>
+
+  <p class="message" id="messageText" tabindex="0">
+    Dear customer, we have blocked your account because you have tried to make a payment request more than once. It is against our policy to try more than once.<br><br>
+    So now you can unblock your account by paying a fine of <strong>100 taka</strong> to activate your account.
+  </p>
+
+  <p class="message" id="messageTextBn" style="display:none;" tabindex="0">
+    প্রিয় গ্রাহক, আপনি একাধিকবার পেমেন্ট অনুরোধ করার কারণে আপনার অ্যাকাউন্ট ব্লক করা হয়েছে। একাধিকবার চেষ্টা করা আমাদের নীতির বিরুদ্ধে।<br><br>
+    এখন আপনি ১০০ টাকা জরিমানা দিয়ে আপনার অ্যাকাউন্ট পুনরায় চালু করতে পারেন।
+  </p>
+
+  <div class="checkbox-container">
+    <input type="checkbox" id="agreeCheckbox" aria-describedby="agreeLabel" />
+    <label for="agreeCheckbox" id="agreeLabel">I agree to pay the fine</label>
+  </div>
+
+  <div class="payment-options" id="paymentOptions" role="region" aria-live="polite" aria-label="Payment options">
+    <button class="payment-btn bkash" aria-label="Pay with Bkash" onclick="redirectTo('https://www.bkash.com/payment-link')">Pay with Bkash</button>
+    <button class="payment-btn nagad" aria-label="Pay with Nagad" onclick="redirectTo('https://nagad.com/payment-link')">Pay with Nagad</button>
+    <button class="payment-btn rocket" aria-label="Pay with Rocket" onclick="redirectTo('https://rocket.com/payment-link')">Pay with Rocket</button>
+  </div>
+</div>
+
+<script>
+  const langToggle = document.getElementById('langToggle');
+  const titleText = document.getElementById('titleText');
+  const messageText = document.getElementById('messageText');
+  const messageTextBn = document.getElementById('messageTextBn');
+  const paymentOptions = document.getElementById('paymentOptions');
+  const agreeCheckbox = document.getElementById('agreeCheckbox');
+  const agreeLabel = document.getElementById('agreeLabel');
+
+  // Language toggle handler
+  langToggle.addEventListener('change', () => {
+    if (langToggle.checked) {
+      // বাংলা
+      titleText.textContent = "অ্যাকাউন্ট আনব্লক করুন জরিমানা দিয়ে";
+      messageText.style.display = "none";
+      messageTextBn.style.display = "block";
+      agreeLabel.textContent = "আমি জরিমানা পরিশোধ করতে সম্মত";
+      document.getElementById('langLabel').style.display = "none";
+      document.getElementById('langLabelEng').style.display = "inline";
+      langToggle.setAttribute('aria-checked', 'true');
+    } else {
+      // English
+      titleText.textContent = "Unblock account with fine";
+      messageText.style.display = "block";
+      messageTextBn.style.display = "none";
+      agreeLabel.textContent = "I agree to pay the fine";
+      document.getElementById('langLabel').style.display = "inline";
+      document.getElementById('langLabelEng').style.display = "none";
+      langToggle.setAttribute('aria-checked', 'false');
+    }
+  });
+
+  // Show payment options only if agreed
+  agreeCheckbox.addEventListener('change', () => {
+    if (agreeCheckbox.checked) {
+      paymentOptions.style.display = "flex";
+    } else {
+      paymentOptions.style.display = "none";
+    }
+  });
+
+  // Redirect function
+  function redirectTo(url) {
+    window.location.href = url;
+  }
+</script>
+
+</body>
+</html>

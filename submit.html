@@ -46,8 +46,15 @@
       line-height: 1.6;
     }
 
+    .app-number {
+      font-size: 14px;
+      color: #00796b;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
     .btn {
-      margin-top: 30px;
+      margin-top: 20px;
       display: inline-block;
       padding: 12px 25px;
       background-color: #00796b;
@@ -56,10 +63,15 @@
       text-decoration: none;
       font-weight: 600;
       transition: background-color 0.3s;
+      cursor: pointer;
     }
 
     .btn:hover {
       background-color: #004d40;
+    }
+
+    canvas {
+      display: none;
     }
 
     @media (max-width: 480px) {
@@ -74,9 +86,66 @@
   <div class="card">
     <span class="material-icons-round">check_circle</span>
     <h1>Thank You!</h1>
-    <p>Your unban request has been submitted successfully. <br>Our team will review your request and contact you soon.</p>
-    <a href="home.html" class="btn">Back to Home</a>
+    <p>Your unban request has been submitted successfully.<br>Our team will review your request and contact you soon.</p>
+    <div class="app-number">Application ID: <span id="appId"></span></div>
+    
+    <a href="home.html" class="btn">Back to Home</a><br><br>
+    <button class="btn" onclick="downloadReceipt()">Download Receipt</button>
   </div>
+
+  <canvas id="receiptCanvas" width="600" height="300"></canvas>
+
+  <script>
+    let applicationId = "";
+
+    // Generate random ID and display
+    function generateAppId() {
+      applicationId = 'UBN-' + Math.floor(10000000 + Math.random() * 90000000);
+      document.getElementById('appId').innerText = applicationId;
+    }
+
+    window.onload = generateAppId;
+
+    // Download receipt as image
+    function downloadReceipt() {
+      const canvas = document.getElementById('receiptCanvas');
+      const ctx = canvas.getContext('2d');
+
+      // Clear previous content
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw white background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Title
+      ctx.fillStyle = '#004d40';
+      ctx.font = 'bold 26px Arial';
+      ctx.fillText('Submission Receipt', 20, 40);
+
+      // Application ID
+      ctx.fillStyle = '#000000';
+      ctx.font = '18px Arial';
+      ctx.fillText(`Application ID: ${applicationId}`, 20, 90);
+
+      // Static messages
+      ctx.font = '16px Arial';
+      ctx.fillText('Thank you for your submission.', 20, 130);
+      ctx.fillText('Our team will contact you soon.', 20, 160);
+
+      // Current Date/Time
+      const date = new Date().toLocaleString();
+      ctx.fillText(`Date: ${date}`, 20, 200);
+
+      // Create temporary link and trigger download
+      const link = document.createElement('a');
+      link.download = `${applicationId}_receipt.png`;
+      link.href = canvas.toDataURL('image/png');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
 
 </body>
 </html>
